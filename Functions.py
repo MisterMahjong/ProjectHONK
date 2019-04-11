@@ -1,10 +1,14 @@
 import pygame
 
-def RectMove():
-    pygame.draw.rect(playfield, WHITE, [30, 30, 100, 100], 0)
 
+def clown(x, y):
+    global Clowned
+    global playfield
+    playfield.blit(Clowned,(x, y))
 
-
-def RectMove():
-    pygame.
+def shuffleleft():
+    global clownx
+    clownx = clownx + 10
+    if clownx > 900:
+        clownx = clownx -1600
 
