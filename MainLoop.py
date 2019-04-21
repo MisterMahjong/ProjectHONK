@@ -19,6 +19,7 @@ x = (playx)
 y = (playy)
 clownx = 50
 clowny = 50
+timer = 0
 GameOver = False
 ticktock = 0
 
@@ -34,30 +35,32 @@ def clown(x, y):
 
 def shuffleright():
     global clownx
-    clownx = clownx + 5
+    clownx = clownx + .1
 
 def shuffleleft():
     global clownx
-    clownx = clownx - 5
+    clownx = clownx - 1
 
-def truffleshuffle():
+def hitbox():
     global clownx
-    shuffleright()
-
-    shuffleleft()
+    pygame.draw.rect(playfield, WHITE, [clownx + 250, clowny + 50, 275, 650], 5)
 
 #The start of the "game loop", grabs events and checks to ensure our parameter =! True
+
 while not GameOver:
     playfield.blit(bg, (0, 0))
     clown(clownx, clowny)
-    truffleshuffle()
-    ticktock = pygame.time.get_ticks()
-    print(ticktock)
+    shuffleleft()
+    hitbox()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             GameOver = True
-        elif event.type == pygame.mouse.get_pressed(5):
-            GameOver = True
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            p, q = event.pos
+            if hitbox().collidepoint(p, q):
+                print('Successful Strike')
+        if event.type == pygame.MOUSEBUTTONUP:
+            print("HONK")
         print(event)
     pygame.display.update()
     pygame.time.Clock().tick(60)
