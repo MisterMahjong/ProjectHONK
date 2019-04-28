@@ -28,7 +28,6 @@ xdirection = True
 ydirection = True
 GameOver = False
 
-
 #defining images to be called in the program
 Clowned = pygame.image.load("clown1.png")
 bg = pygame.image.load("spooktown.jpg")
@@ -51,30 +50,26 @@ def clown(x, y):
 
 def scootup():
     global clowny
-    clowny = clowny + 6
+    clowny = clowny + 10
 
 def scootdown():
     global clowny
-    clowny = clowny - 6
+    clowny = clowny - 10
 
 def shuffleright():
     global clownx
-    clownx = clownx + 6
+    clownx = clownx + 10
 
 def shuffleleft():
     global clownx
-    clownx = clownx - 6
+    clownx = clownx - 10
 
 def reset():
     global clownx, clowny, xdirection, ydirection
-    if clownx > 800 or clownx < 0:
+    if clownx > 700 or clownx < -100:
         xdirection = not xdirection
-    if clowny > 600 or clowny < 0:
+    if clowny > 500 or clowny < -100:
         ydirection = not ydirection
-
-def hitbox(boxwidth, boxheight):
-    global clownx
-    pygame.draw.rect(playfield, WHITE, [clownx + hboxx, clowny + hboxy, boxwidth, boxheight], 5)
 
 
 #The start of the "game loop", grabs events and checks to ensure our parameter =! True
@@ -86,8 +81,8 @@ while not GameOver:
     pygame.mouse.set_visible(1)
     playfield.blit(bg, (0, 0))
     clown(clownx, clowny)
-    hitbox(200, 200)
-
+    hitbox = pygame.draw.rect(playfield, WHITE, [clownx + hboxx, clowny + hboxy, 200, 200], 5)
+    pygame.display.update()
     #These statements determine the x/y movement of the image
 
     reset()
@@ -120,11 +115,12 @@ while not GameOver:
         if x.type == pygame.QUIT:
             GameOver = True
         if x.type == pygame.MOUSEBUTTONDOWN:
-            print("HONK")
+            mouse_pos = x.pos
+            if hitbox.collidepoint(mouse_pos):
+                print("OH SHIT")
         if x.type == pygame.MOUSEBUTTONUP:
             print("HONK")
         print(x)
-    pygame.display.update()
-    pygame.time.Clock().tick(300000)
+    pygame.time.Clock().tick(30)
 pygame.quit()
 quit()
