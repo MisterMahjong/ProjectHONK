@@ -3,9 +3,20 @@
 import pygame
 import random
 
-#Initializing pygame module
+#Initializing pygame and pygame sound modules
 
 pygame.init()
+pygame.mixer.init()
+
+#Assigning our sound files to callable audio/setting levels.
+
+music = pygame.mixer.Sound('music.wav')
+pain = pygame.mixer.Sound('pain.wav')
+fire = pygame.mixer.Sound('pistol.wav')
+#horndown = pygame.mixer.Sound('horndown.wav')
+#hornup = pygame.mixer.Sound('hornup.wav')
+loser = pygame.mixer.Sound('loser.wav')
+pygame.mixer.Sound.set_volume(music, .3)
 
 #Sets a caption for the game window
 
@@ -86,6 +97,8 @@ def reset():
 
 #The start of the "game loop", grabs events and checks to ensure our parameter =! True
 
+pygame.mixer.Sound.play(music)
+
 while not GameOver:
 
     #These statements draw the background and the image on the playfield
@@ -136,10 +149,12 @@ while not GameOver:
 
         if x.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = x.pos
+            pygame.mixer.Sound.play(fire)
             if hitbox.collidepoint(mouse_pos):
+                pygame.mixer.Sound.play(pain)
                 score = score + 1
                 print(score)
-                if score == 10:
+                if score == 50:
                     playfield.blit(winclown, (0,0))
                     playfield.blit(victorymessage, (200, 300))
                     pygame.display.update()
@@ -149,13 +164,15 @@ while not GameOver:
         if x.type == pygame.MOUSEBUTTONUP:
             print("HONK")
 
+
         if gametimer < 0:
             playfield.blit(loseclown, (0, 0))
             playfield.blit(failuremessage, (200, 300))
+            pygame.mixer.Sound.play(loser)
             pygame.display.update()
             pygame.time.delay(5000)
             pygame.quit()
 
-    pygame.time.Clock().tick(60)
+    pygame.time.Clock().tick(30)
 pygame.quit()
 quit()
