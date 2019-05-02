@@ -1,7 +1,6 @@
 #Importing the pygame module
 
 import pygame
-import random
 
 #Setting up my variables
 
@@ -106,7 +105,7 @@ def countdown():
     while count != 0:
         playfield.blit(bg, (0, 0))
         countdownmessage1 = messagefont.render("GET READY TO HONK IN" + ' ' + str(count), 1, WHITE)
-        countdownmessage2 = scorefont.render("Honk him 40 times to win", 1, WHITE)
+        countdownmessage2 = scorefont.render("Honk him 50 times to win", 1, WHITE)
         countdownmessage3 = scorefont.render("1 miss = 1 second lost", 1, WHITE)
         playfield.blit(countdownmessage1, (100, 200))
         playfield.blit(countdownmessage2, (275, 300))
